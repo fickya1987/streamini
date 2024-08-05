@@ -55,7 +55,7 @@ if st.sidebar.button("Save system prompt"):
 
 # Load saved system prompts
 saved_system_prompts = [f"{filename.split('.')[0]}" for filename in os.listdir(system_prompts_dir) if filename.endswith(".txt")]
-selected_system_prompt = st.sidebar.selectbox("Select saved system prompt:", saved_system_prompts, index=None)
+selected_system_prompt = st.sidebar.selectbox("Select saved system prompt:", saved_system_prompts)
 
 if selected_system_prompt:
     with open(os.path.join(system_prompts_dir, f"{selected_system_prompt}.txt"), "r") as f:
@@ -79,30 +79,6 @@ for i, message in enumerate(st.session_state.messages):
                     st.session_state.messages[i]["content"] = new_content
                     st.session_state.edited_message_index = i
                     st.experimental_rerun()
-
-# Save conversation button in sidebar
-if st.sidebar.button("Save Conversation"):
-    if st.session_state.messages:
-        if not os.path.exists("history"):
-            os.makedirs("history")
-        filename = f"history/output-{len(st.session_state.messages)}-{datetime.now().strftime('%Y%m%d%H%M%S')}.json"
-        with open(filename, 'w') as f:
-            json.dump(st.session_state.messages, f, indent=4)
-        st.sidebar.success(f"Conversation saved as {filename}")
-    else:
-        st.sidebar.error("No messages to save!")
-
-# Load conversation button in sidebar
-conversation_files = [f for f in os.listdir("history") if f.endswith(".json")]
-selected_conversation = st.sidebar.selectbox("Load Conversation:", conversation_files)
-
-if st.sidebar.button("Load Conversation"):
-    if selected_conversation:
-        with open(os.path.join("history", selected_conversation), "r") as f:
-            st.session_state.messages = json.load(f)
-        st.experimental_rerun()
-    else:
-        st.sidebar.error("Please select a conversation to load!")
 
 # Clean chat button in sidebar
 if st.sidebar.button("Clean chat"):
