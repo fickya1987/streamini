@@ -43,15 +43,6 @@ system_prompt = "You are a helpful assistant."
 
 # Sidebar for editing system prompt
 system_prompt = st.sidebar.text_area("Edit system prompt:", height=100, value=system_prompt)
-save_system_prompt_name = st.sidebar.text_input("Save system prompt as:")
-if st.sidebar.button("Save system prompt"):
-    if save_system_prompt_name:
-        filename = os.path.join(system_prompts_dir, f"{save_system_prompt_name}.txt")
-        with open(filename, "w") as f:
-            f.write(system_prompt)
-        st.sidebar.success(f"System prompt saved as {filename}")
-    else:
-        st.sidebar.error("Please enter a name for the system prompt")
 
 # Load saved system prompts
 saved_system_prompts = [f"{filename.split('.')[0]}" for filename in os.listdir(system_prompts_dir) if filename.endswith(".txt")]
