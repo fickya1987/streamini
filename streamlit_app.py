@@ -42,7 +42,7 @@ if not os.path.exists(system_prompts_dir):
 system_prompt = "You are a helpful assistant."
 
 # Sidebar for editing system prompt
-system_prompt = st.sidebar.text_area("Edit system prompt:", height=100, value=system_prompt, index=None)
+system_prompt = st.sidebar.text_area("Edit system prompt:", height=100, value=system_prompt)
 
 # Load saved system prompts
 saved_system_prompts = [f"{filename.split('.')[0]}" for filename in os.listdir(system_prompts_dir) if filename.endswith(".txt")]
